@@ -1,3 +1,4 @@
+import asyncio
 import json
 from pathlib import Path
 from backend.graph.chatbot import Chatbot
@@ -8,6 +9,7 @@ STORAGE_DIR = Path("storage")
 class Game:
     def __init__(self):
         self.chat = Chatbot()
+        self._game_locks: dict[str, asyncio.Lock] = {}
 
     def _game_path(self, game_id: str):
         return STORAGE_DIR / f"{game_id}.json"
@@ -21,17 +23,20 @@ class Game:
             json.dump(game, f, ensure_ascii=False, indent=2)
             f.write("\n")
         
-    def handle_message(self, game_id: str, message: str):
-        game = self.get_game(game_id)
-        response = self.chat.handle_message(
-            game_id=game_id,
-            message=message,
-            secret=game["secret"],
-        )
+    async def handle_message(self, game_id: str, message: str):
+        lock = self._game_locks.setdefault(game_id, asyncio.Lock())
 
-        game["messages"].append({"role": "user", "content": message})
-        game["messages"].append({"role": "assistant", "content": response})
-        self.save_game(game_id, game)
+        async with lock:
+            game = await asyncio.to_thread(self.get_game, game_id)
+            response = await self.chat.handle_message(
+                game_id=game_id,
+                message=message,
+                secret=game["secret"],
+            )
 
-        return response
+            game["messages"].append({"role": "user", "content": message})
+            game["messages"].append({"role": "assistant", "content": response})
+            await asyncio.to_thread(self.save_game, game_id, game)
+
+            return response
         

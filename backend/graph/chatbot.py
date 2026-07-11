@@ -60,14 +60,14 @@ class Chatbot:
         self.checkpointer = InMemorySaver()
         self.graph = self._build_graph()
 
-    def handle_message(self, game_id=None, message=None, secret=None):
+    async def handle_message(self, game_id=None, message=None, secret=None):
         config = {
             "configurable": {
                 "thread_id": game_id,
             }
         }
 
-        result = self.graph.invoke(
+        result = await self.graph.ainvoke(
             {
                 "messages": [HumanMessage(content=message)],
                 "secret": secret,
@@ -90,11 +90,11 @@ class Chatbot:
             "user_message": state["messages"][-1],
         }
     
-    def llm_route(self, state: ChatbotState) -> dict:
-        decision = self.model.with_structured_output(
+    async def llm_route(self, state: ChatbotState) -> dict:
+        decision = await self.model.with_structured_output(
             RouteDecision,
             include_raw=False,
-        ).invoke([
+        ).ainvoke([
             SystemMessage(content=CHATBOT_PROMPT),
             *state["messages"],
         ])
@@ -117,8 +117,8 @@ class Chatbot:
             "ai_message": AIMessage(content="Start a new game!"),
         }
     
-    def _question(self, state: ChatbotState) -> dict:
-        response = self.model.invoke([
+    async def _question(self, state: ChatbotState) -> dict:
+        response = await self.model.ainvoke([
             SystemMessage(content=QUESTION_PROMPT.format(secret=state["secret"])),
             *state["messages"],
         ])
@@ -127,8 +127,8 @@ class Chatbot:
             "ai_message": response,
         }
 
-    def _hint(self, state: ChatbotState) -> dict:
-        response = self.model.invoke([
+    async def _hint(self, state: ChatbotState) -> dict:
+        response = await self.model.ainvoke([
             SystemMessage(content=HINT_PROMPT.format(secret=state["secret"])),
             *state["messages"],
         ])
@@ -137,8 +137,8 @@ class Chatbot:
             "ai_message": response,
         }
 
-    def _meta(self, state: ChatbotState) -> dict:
-        response = self.model.invoke([
+    async def _meta(self, state: ChatbotState) -> dict:
+        response = await self.model.ainvoke([
             SystemMessage(content=META_PROMPT),
             *state["messages"],
         ])

@@ -30,8 +30,8 @@ def create_game():
         "message": OPENING_MESSAGE,
     }
 @app.post("/games/{game_id}/messages")
-def send_message(game_id: str, request: SendMessageRequest):
-    response = game_engine.handle_message(game_id, request.message)
+async def send_message(game_id: str, request: SendMessageRequest):
+    response = await game_engine.handle_message(game_id, request.message)
     return {
         "message": response, 
     }
