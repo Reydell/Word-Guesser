@@ -16,11 +16,14 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text('I want to play a game with you.\n\nType /newgame to play.')
     
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text('Type /newgame to play')
+    await update.message.reply_text(
+        """
+        /newgame to play
+        
+        The goal is to guess the secret word by asking questions. If you feel completely stuck, ask for a hint.
+        """)
 
 async def newgame_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    print(f"User: ({update.message.chat.username}) in {update.message.chat.type}: \"{update.message.text}\"")
-
     async with httpx.AsyncClient() as client:
         response = await client.post(
             f"{API_BASE_URL}/games/",
