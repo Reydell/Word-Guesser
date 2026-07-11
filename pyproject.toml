@@ -1,0 +1,18 @@
+[project]
+name = "guessing-game"
+version = "0.1.0"
+description = "Guessing game"
+requires-python = ">=3.12"
+dependencies = [
+    "PyYAML>=6.0.2",
+    "python-telegram-bot",
+    "langchain_groq",
+    "langgraph",
+    "streamlit",
+    "fastapi",
+    "uvicorn",
+    "python-dotenv",
+]
+
+[tool.uv]
+package = false
