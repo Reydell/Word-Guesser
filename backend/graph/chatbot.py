@@ -69,7 +69,10 @@ class Chatbot:
 
         result = await self.graph.ainvoke(
             {
-                "messages": [HumanMessage(content=message)],
+                "messages": [
+                    AIMessage(content="Guess the word!"),
+                    HumanMessage(content=message),
+                ],
                 "secret": secret,
             },
             config=config,
