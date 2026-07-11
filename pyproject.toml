@@ -8,10 +8,15 @@ dependencies = [
     "python-telegram-bot",
     "langchain_groq",
     "langgraph",
-    "streamlit",
     "fastapi",
     "uvicorn",
     "python-dotenv",
+]
+
+[dependency-groups]
+dev = [
+    "requests",
+    "streamlit",
 ]
 
 [tool.uv]

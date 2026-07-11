@@ -1,11 +1,14 @@
-from .config import ALLOWED_USERS, BOT_TOKEN, BOT_USERNAME, DEBOUNCE_SECONDS
+from .config import (
+    ALLOWED_USERS,
+    API_BASE_URL,
+    BOT_TOKEN,
+    BOT_USERNAME,
+    DEBOUNCE_SECONDS,
+)
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 import asyncio
 import httpx
-
-
-API_BASE_URL = "http://localhost:8000"
 
 
 # Commands
