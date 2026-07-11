@@ -7,4 +7,4 @@ ui:
 	uv run streamlit run frontend/streamlit/app.py
 
 tg:
-	uv run python frontend.telegram.bot
+	uv run python -m frontend.telegram.bot
