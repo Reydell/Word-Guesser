@@ -132,7 +132,7 @@ class Chatbot:
 
     async def _hint(self, state: ChatbotState) -> dict:
         response = await self.model.ainvoke([
-            SystemMessage(content=HINT_PROMPT.format(secret=state["secret"])),
+            SystemMessage(content=HINT_PROMPT),
             *state["messages"],
         ])
         return {
