@@ -9,3 +9,4 @@ storage/*
 .env
 AGENTS.md
 NOTES.md
+deploy.sh
