@@ -1,0 +1,21 @@
+services:
+  backend:
+    build: .
+    image: guessing-game
+    env_file: .env
+    restart: unless-stopped
+    volumes:
+      - game-data:/app/storage
+
+  telegram:
+    build: .
+    image: guessing-game
+    command: ["python", "-m", "frontend.telegram.bot"]
+    restart: unless-stopped
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend/telegram/config.yaml:/app/frontend/telegram/config.yaml:ro
+
+volumes:
+  game-data:

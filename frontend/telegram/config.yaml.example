@@ -1,0 +1,8 @@
+bot:
+    token: "your-telegram-bot-token"
+    username: "@your_bot_username"
+    allowed_users:
+        - "allowed_username"
+    debounce_seconds: 1
+    # Use http://localhost:8000 when running the bot outside Docker.
+    api_base_url: "http://backend:8000"

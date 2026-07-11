@@ -1,0 +1,8 @@
+.git
+.venv
+.env
+**/__pycache__
+**/*.py[cod]
+storage
+frontend/streamlit
+frontend/telegram/config.yaml
