@@ -10,3 +10,4 @@ storage/*
 AGENTS.md
 NOTES.md
 deploy.sh
+.DS_Store
