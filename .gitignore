@@ -6,6 +6,7 @@ __pycache__/
 .ruff_cache/
 config.yaml
 storage/*
+!storage/.gitkeep
 .env
 AGENTS.md
 NOTES.md
