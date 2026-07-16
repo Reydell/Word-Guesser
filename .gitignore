@@ -10,5 +10,6 @@ storage/*
 .env
 AGENTS.md
 NOTES.md
+TODO.md
 deploy.sh
 .DS_Store
